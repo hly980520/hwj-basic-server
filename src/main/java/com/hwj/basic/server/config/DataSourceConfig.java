@@ -1,0 +1,177 @@
+package com.hwj.basic.server.config;
+
+import com.alibaba.druid.pool.DruidDataSource;
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+
+/**
+ * @Program: hwj
+ * @Description:
+ * @author: wenjing.huang
+ * @since: 2025-03-17 14:02:37
+ */
+@Configuration
+@ConfigurationProperties(prefix = "hwj.data-source.druid")
+public class DataSourceConfig {
+
+    /**
+     * 驱动
+     */
+    private String driverClassName;
+    /**
+     * 数据库连接
+     */
+    private String url;
+    /**
+     * 数据库用户名
+     */
+    private String username;
+    /**
+     * 数据库密码
+     */
+    private String password;
+    /**
+     * 初始化连接数
+     */
+    private Integer initialSize;
+    /**
+     * 连接存活时间
+     */
+    private Integer maxActive;
+    /**
+     * 最小连接数
+     */
+    private Integer minIdle;
+    /**
+     * 连接获取等待时间
+     */
+    private Integer maxWait;
+
+    private boolean keepAlive;
+
+    private boolean removerAbandoned;
+
+    private Integer removerAbandonedTimeout;
+
+    private boolean testOnBorrow;
+
+    @Bean(name = "dataSource", initMethod = "init", destroyMethod = "close")
+    public DruidDataSource dataSource() throws Exception {
+
+        DruidDataSource dataSource = new DruidDataSource();
+        dataSource.setDriverClassName(driverClassName);
+        dataSource.setUrl(url);
+        dataSource.setUsername(username);
+        dataSource.setPassword(password);
+        dataSource.setInitialSize(initialSize);
+        dataSource.setMaxActive(maxActive);
+        //此配置开启可保证连接池中的可用连接数保持在minIdle数量以内
+        dataSource.setKeepAlive(keepAlive);
+        dataSource.setMinIdle(minIdle);
+        dataSource.setMaxWait(maxWait);
+        dataSource.setRemoveAbandoned(removerAbandoned);
+        dataSource.setRemoveAbandonedTimeout(removerAbandonedTimeout);
+        dataSource.setTestOnBorrow(testOnBorrow);
+        dataSource.setValidationQuery("SELECT 1");
+        dataSource.addFilters("mergeStat");
+        return dataSource;
+    }
+
+
+    public String getDriverClassName() {
+        return driverClassName;
+    }
+
+    public void setDriverClassName(String driverClassName) {
+        this.driverClassName = driverClassName;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public Integer getInitialSize() {
+        return initialSize;
+    }
+
+    public void setInitialSize(Integer initialSize) {
+        this.initialSize = initialSize;
+    }
+
+    public Integer getMaxActive() {
+        return maxActive;
+    }
+
+    public void setMaxActive(Integer maxActive) {
+        this.maxActive = maxActive;
+    }
+
+    public Integer getMinIdle() {
+        return minIdle;
+    }
+
+    public void setMinIdle(Integer minIdle) {
+        this.minIdle = minIdle;
+    }
+
+    public Integer getMaxWait() {
+        return maxWait;
+    }
+
+    public void setMaxWait(Integer maxWait) {
+        this.maxWait = maxWait;
+    }
+
+    public boolean isKeepAlive() {
+        return keepAlive;
+    }
+
+    public void setKeepAlive(boolean keepAlive) {
+        this.keepAlive = keepAlive;
+    }
+
+    public boolean isRemoverAbandoned() {
+        return removerAbandoned;
+    }
+
+    public void setRemoverAbandoned(boolean removerAbandoned) {
+        this.removerAbandoned = removerAbandoned;
+    }
+
+    public Integer getRemoverAbandonedTimeout() {
+        return removerAbandonedTimeout;
+    }
+
+    public void setRemoverAbandonedTimeout(Integer removerAbandonedTimeout) {
+        this.removerAbandonedTimeout = removerAbandonedTimeout;
+    }
+
+    public boolean isTestOnBorrow() {
+        return testOnBorrow;
+    }
+
+    public void setTestOnBorrow(boolean testOnBorrow) {
+        this.testOnBorrow = testOnBorrow;
+    }
+}
