@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 /**
  * @Program: hwj
  * @Description:
- * @author: peng.huang
+ * @author: wenjing.huang
  * @since: 2025-03-17 14:50:00
  */
 public class MyBatisPlusMetaObjectHandler implements MetaObjectHandler {

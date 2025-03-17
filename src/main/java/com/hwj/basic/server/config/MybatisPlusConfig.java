@@ -14,7 +14,7 @@ import org.springframework.context.annotation.Configuration;
 /**
  * @Program: hwj
  * @Description:
- * @author: peng.huang
+ * @author: wenjing.huang
  * @since: 2025-03-17 14:43:30
  */
 @Configuration

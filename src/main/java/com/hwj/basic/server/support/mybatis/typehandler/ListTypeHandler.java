@@ -15,7 +15,7 @@ import java.util.Objects;
 /**
  * @Program: hwj
  * @Description:
- * @author: peng.huang
+ * @author: wenjing.huang
  * @since: 2025-03-17 13:39:18
  */
 public class ListTypeHandler<T> extends BaseTypeHandler<List<T>> {

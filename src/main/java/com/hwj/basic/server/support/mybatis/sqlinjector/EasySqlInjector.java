@@ -10,7 +10,7 @@ import java.util.List;
 /**
  * @Program: hwj
  * @Description:
- * @author: peng.huang
+ * @author: wenjing.huang
  * @since: 2025-03-17 14:51:23
  */
 public class EasySqlInjector extends DefaultSqlInjector {

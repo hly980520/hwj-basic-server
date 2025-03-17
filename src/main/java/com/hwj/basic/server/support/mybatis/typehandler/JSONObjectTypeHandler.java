@@ -14,7 +14,7 @@ import java.util.Objects;
 /**
  * @Program: hwj
  * @Description:
- * @author: peng.huang
+ * @author: wenjing.huang
  * @since: 2025-03-17 15:12:19
  */
 public class JSONObjectTypeHandler extends BaseTypeHandler<JSONObject> {
