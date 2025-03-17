@@ -28,7 +28,7 @@ import org.springframework.boot.web.servlet.support.SpringBootServletInitializer
                 SessionAutoConfiguration.class
         }
 )
-//@EnableHwjDubbo
+@EnableHwjDubbo
 public class Application extends SpringBootServletInitializer {
 
     @Override

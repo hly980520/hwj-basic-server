@@ -8,7 +8,7 @@ package com.hwj.basic.server.constant;
  */
 public class DubboConst {
 
-    public static final String PROVIDER = "provider-hwj-user-center-server";
+    public static final String PROVIDER = "provider-hwj-basic-server";
 
     private DubboConst() {
         throw new IllegalStateException("Utility class");

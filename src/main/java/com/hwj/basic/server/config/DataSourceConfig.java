@@ -48,17 +48,16 @@ public class DataSourceConfig {
      */
     private Integer maxWait;
 
-    private boolean keepAlive;
+    private Boolean keepAlive;
 
-    private boolean removerAbandoned;
+    private Boolean removerAbandoned;
 
     private Integer removerAbandonedTimeout;
 
-    private boolean testOnBorrow;
+    private Boolean testOnBorrow;
 
     @Bean(name = "dataSource", initMethod = "init", destroyMethod = "close")
     public DruidDataSource dataSource() throws Exception {
-
         DruidDataSource dataSource = new DruidDataSource();
         dataSource.setDriverClassName(driverClassName);
         dataSource.setUrl(url);
@@ -143,19 +142,19 @@ public class DataSourceConfig {
         this.maxWait = maxWait;
     }
 
-    public boolean isKeepAlive() {
+    public Boolean getKeepAlive() {
         return keepAlive;
     }
 
-    public void setKeepAlive(boolean keepAlive) {
+    public void setKeepAlive(Boolean keepAlive) {
         this.keepAlive = keepAlive;
     }
 
-    public boolean isRemoverAbandoned() {
+    public Boolean getRemoverAbandoned() {
         return removerAbandoned;
     }
 
-    public void setRemoverAbandoned(boolean removerAbandoned) {
+    public void setRemoverAbandoned(Boolean removerAbandoned) {
         this.removerAbandoned = removerAbandoned;
     }
 
@@ -167,11 +166,11 @@ public class DataSourceConfig {
         this.removerAbandonedTimeout = removerAbandonedTimeout;
     }
 
-    public boolean isTestOnBorrow() {
+    public Boolean getTestOnBorrow() {
         return testOnBorrow;
     }
 
-    public void setTestOnBorrow(boolean testOnBorrow) {
+    public void setTestOnBorrow(Boolean testOnBorrow) {
         this.testOnBorrow = testOnBorrow;
     }
 }
