@@ -4,6 +4,9 @@ import com.alibaba.druid.pool.DruidDataSource;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.env.Environment;
+
+import javax.annotation.Resource;
 
 /**
  * @Program: hwj
@@ -14,6 +17,9 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 @ConfigurationProperties(prefix = "hwj.data-source.druid")
 public class DataSourceConfig {
+
+    @Resource
+    private Environment env;
 
     /**
      * 驱动
@@ -59,19 +65,19 @@ public class DataSourceConfig {
     @Bean(name = "dataSource", initMethod = "init", destroyMethod = "close")
     public DruidDataSource dataSource() throws Exception {
         DruidDataSource dataSource = new DruidDataSource();
-        dataSource.setDriverClassName(driverClassName);
-        dataSource.setUrl(url);
-        dataSource.setUsername(username);
-        dataSource.setPassword(password);
-        dataSource.setInitialSize(initialSize);
-        dataSource.setMaxActive(maxActive);
+        dataSource.setDriverClassName(this.driverClassName);
+        dataSource.setUrl(this.url);
+        dataSource.setUsername(this.username);
+        dataSource.setPassword(this.password);
+        dataSource.setInitialSize(this.initialSize);
+        dataSource.setMaxActive(this.maxActive);
         //此配置开启可保证连接池中的可用连接数保持在minIdle数量以内
-        dataSource.setKeepAlive(keepAlive);
-        dataSource.setMinIdle(minIdle);
-        dataSource.setMaxWait(maxWait);
-        dataSource.setRemoveAbandoned(removerAbandoned);
-        dataSource.setRemoveAbandonedTimeout(removerAbandonedTimeout);
-        dataSource.setTestOnBorrow(testOnBorrow);
+        dataSource.setKeepAlive(this.keepAlive);
+        dataSource.setMinIdle(this.minIdle);
+        dataSource.setMaxWait(this.maxWait);
+        dataSource.setRemoveAbandoned(this.removerAbandoned);
+        dataSource.setRemoveAbandonedTimeout(this.removerAbandonedTimeout);
+        dataSource.setTestOnBorrow(this.testOnBorrow);
         dataSource.setValidationQuery("SELECT 1");
         dataSource.addFilters("mergeStat");
         return dataSource;

@@ -11,7 +11,6 @@ import org.springframework.context.annotation.Configuration;
  * @since: 2025-03-17 19:46:21
  */
 //@Configuration
-@EnableNacosConfig
 @NacosPropertySource(dataId = "hwj-basic-server-env.properties", groupId = "hwj", autoRefreshed = true)
 public class NacosConfig {
 

@@ -75,11 +75,11 @@
             <version>${hwj-basic-common.version}</version>
         </dependency>
 
-        <dependency>
-            <groupId>com.hwj.dubbo</groupId>
-            <artifactId>hwj-dubbo-compatible</artifactId>
-            <version>${hwj-dubbo-compatible.version}</version>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>com.hwj.dubbo</groupId>-->
+<!--            <artifactId>hwj-dubbo-compatible</artifactId>-->
+<!--            <version>${hwj-dubbo-compatible.version}</version>-->
+<!--        </dependency>-->
 
         <dependency>
             <groupId>org.apache.commons</groupId>
