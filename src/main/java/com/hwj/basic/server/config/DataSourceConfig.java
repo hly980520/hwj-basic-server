@@ -4,9 +4,6 @@ import com.alibaba.druid.pool.DruidDataSource;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.env.Environment;
-
-import javax.annotation.Resource;
 
 /**
  * @Program: hwj
@@ -17,10 +14,6 @@ import javax.annotation.Resource;
 @Configuration
 @ConfigurationProperties(prefix = "hwj.data-source.druid")
 public class DataSourceConfig {
-
-    @Resource
-    private Environment env;
-
     /**
      * 驱动
      */
