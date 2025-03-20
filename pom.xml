@@ -33,7 +33,7 @@
 
         <spring-boot-maven-plugin.version>2.7.18</spring-boot-maven-plugin.version>
         <maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
-
+        <jbcrypt.version>0.4</jbcrypt.version>
 
         <hwj-basic-common.version>1.0.0-SNAPSHOT</hwj-basic-common.version>
     </properties>
@@ -181,6 +181,12 @@
             <groupId>org.mapstruct</groupId>
             <artifactId>mapstruct</artifactId>
             <version>${mapstruct.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.mindrot</groupId>
+            <artifactId>jbcrypt</artifactId>
+            <version>${jbcrypt.version}</version>
         </dependency>
     </dependencies>
 

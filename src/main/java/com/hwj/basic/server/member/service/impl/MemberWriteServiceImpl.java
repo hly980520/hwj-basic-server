@@ -1,6 +1,7 @@
 package com.hwj.basic.server.member.service.impl;
 
 import com.hwj.basic.common.member.domain.Member;
+import com.hwj.basic.common.member.service.MemberReadService;
 import com.hwj.basic.common.member.service.MemberWriteService;
 import com.hwj.basic.constant.ErrorCode;
 import com.hwj.basic.result.RpcResult;
@@ -8,6 +9,7 @@ import com.hwj.basic.server.constant.DubboConst;
 import com.hwj.basic.server.member.converter.MemberEntityConverter;
 import com.hwj.basic.server.member.entity.MemberEntity;
 import com.hwj.basic.server.member.manager.MemberEntityManager;
+import org.apache.dubbo.config.annotation.DubboReference;
 import org.apache.dubbo.config.annotation.DubboService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,12 +34,31 @@ public class MemberWriteServiceImpl implements MemberWriteService {
     @Resource
     private MemberEntityConverter memberEntityConverter;
 
+    @Resource
+    private MemberReadService memberReadService;
+
     @Override
     public RpcResult<Member> create(Member member) {
         if (Objects.isNull(member)) {
             LOGGER.warn("Create Failed, The member is null");
             return ErrorCode.PARAMS_MISS.toRpcResult();
         }
+
+        //用户账号和绑定手机号不能重复
+        RpcResult<Member> accountCheck = memberReadService.queryByLoginAccount(member.getLoginAccount());
+        RpcResult<Member> phoneCheck = memberReadService.queryByPhoneNumber(member.getCountryCode(), member.getPhoneNumber());
+        if (accountCheck.isSuccess()){
+            LOGGER.warn("Create Failed: loginAccount already exists, account={}",member.getLoginAccount());
+            return ErrorCode.PARAMS_INVALID.toRpcResult();
+        }
+        if (phoneCheck.isSuccess()){
+            LOGGER.warn("Create Failed: phone already registered, countryCode={}, phone={}",member.getCountryCode(), member.getPhoneNumber());
+            return ErrorCode.PARAMS_INVALID.toRpcResult();
+        }
+
+        //密码加密
+        String encryptedPassword = BCrypt.hashpw(member.getLoginPassword(), BCrypt.gensalt());
+        member.setLoginPassword(encryptedPassword);
 
         MemberEntity data = memberEntityConverter.from(member);
         boolean insert = memberEntityManager.insert(data);

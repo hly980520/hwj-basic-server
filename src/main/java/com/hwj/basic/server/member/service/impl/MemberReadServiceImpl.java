@@ -1,5 +1,6 @@
 package com.hwj.basic.server.member.service.impl;
 
+import com.alibaba.nacos.api.config.annotation.NacosValue;
 import com.hwj.basic.common.member.domain.Member;
 import com.hwj.basic.common.member.service.MemberReadService;
 import com.hwj.basic.constant.ErrorCode;
