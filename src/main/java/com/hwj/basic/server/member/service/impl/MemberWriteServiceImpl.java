@@ -11,6 +11,7 @@ import com.hwj.basic.server.member.entity.MemberEntity;
 import com.hwj.basic.server.member.manager.MemberEntityManager;
 import org.apache.dubbo.config.annotation.DubboReference;
 import org.apache.dubbo.config.annotation.DubboService;
+import org.mindrot.jbcrypt.BCrypt;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
