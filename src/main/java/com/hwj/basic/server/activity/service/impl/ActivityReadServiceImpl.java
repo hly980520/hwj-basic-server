@@ -1,5 +1,6 @@
 package com.hwj.basic.server.activity.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.hwj.basic.common.activity.dto.ActivityDTO;
 import com.hwj.basic.common.activity.service.ActivityReadService;
 import com.hwj.basic.constant.ErrorCode;
@@ -30,12 +31,71 @@ public class ActivityReadServiceImpl implements ActivityReadService {
     private ActivityEntityConverter activityEntityConverter;
 
     @Override
-    public RpcResult<List<ActivityDTO>> queryList() {
-        List<ActivityEntity> activityEntities = activityEntityManager.selectList(null);
-        List<ActivityDTO> data = activityEntityConverter.toDTOList(activityEntities);
+    public RpcResult<ActivityDTO> queryById(Long id) {
+        if (Objects.isNull(id)) {
+            LOGGER.warn("Activity QueryById: Id Is Null");
+            return ErrorCode.PARAMS_MISS.toRpcResult();
+        }
+        ActivityEntity activityEntity = activityEntityManager.selectById(id);
+        ActivityDTO data = activityEntityConverter.toDTO(activityEntity);
         return RpcResult.success(data);
     }
 
+    @Override
+    public RpcResult<ActivityDTO> queryByName(String name) {
+        if (Objects.isNull(name)){
+            LOGGER.warn("Activity QueryByName: Name Is Null");
+            return ErrorCode.PARAMS_MISS.toRpcResult();
+        }
+        ActivityEntity params = new ActivityEntity();
+        params.setName(name);
+        ActivityEntity activityEntity = activityEntityManager.selectOne(params);
+        ActivityDTO data = activityEntityConverter.toDTO(activityEntity);
+        return RpcResult.success(data);
+    }
+
+    @Override
+    public RpcResult<ActivityDTO> queryByType(Integer type) {
+        if (Objects.isNull(type)){
+            LOGGER.warn("Activity QueryByType: Type is Null");
+            return ErrorCode.PARAMS_MISS.toRpcResult();
+        }
+        ActivityEntity params = new ActivityEntity();
+        params.setActivityType(type);
+        ActivityEntity activityEntity = activityEntityManager.selectOne(params);
+        ActivityDTO data = activityEntityConverter.toDTO(activityEntity);
+        return RpcResult.success(data);
+    }
+
+    @Override
+    public RpcResult<ActivityDTO> queryByStatus(Integer status) {
+        if (Objects.isNull(status)){
+            LOGGER.warn("Activity QueryByStatus Failed: Status Is Null");
+            return ErrorCode.PARAMS_MISS.toRpcResult();
+        }
+        ActivityEntity params = new ActivityEntity();
+        params.setStatus(status);
+        ActivityEntity activityEntity = activityEntityManager.selectOne(params);
+        ActivityDTO data = activityEntityConverter.toDTO(activityEntity);
+        return RpcResult.success(data);
+    }
+
+    @Override
+    public RpcResult<List<ActivityDTO>> queryList(Integer status) {
+        if (Objects.isNull(status)){
+            LOGGER.warn("Activity QueryList Failed: Status Is Null");
+            return ErrorCode.PARAMS_MISS.toRpcResult();
+        }
+        ActivityEntity params = new ActivityEntity();
+        params.setStatus(status);
+        if (status == 0){
+            LOGGER.warn("Activity QueryList Failed: Status is 0");
+            return ErrorCode.PARAMS_INVALID.toRpcResult();
+        }
+        List<ActivityEntity> activityEntities = activityEntityManager.selectList(params);
+        List<ActivityDTO> datas = activityEntityConverter.toDTOList(activityEntities);
+        return RpcResult.success(datas);
+    }
 
     @Override
     public RpcResult<DataPage<ActivityDTO>> queryPage(DataPage<ActivityDTO> dataPage, ActivityDTO activityDTO) {

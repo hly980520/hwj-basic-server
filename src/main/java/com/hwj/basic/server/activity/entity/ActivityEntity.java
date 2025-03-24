@@ -1,16 +1,23 @@
 package com.hwj.basic.server.activity.entity;
 
+import com.alibaba.fastjson2.JSONObject;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.annotation.Version;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.StringJoiner;
 
-@TableName(value = "activity_define",autoResultMap = true)
-public class ActivityEntity {
 
+/**
+ * @author hwj
+ */
+@TableName(value = "activity_define",autoResultMap = true)
+public class ActivityEntity implements Serializable {
+
+    private static final long serialVersionUID = 1440087550741126144L;
     /**
      * id
      */
@@ -50,7 +57,7 @@ public class ActivityEntity {
     /**
      * 是否删除[否:0 是:记录id]
      */
-    private Long deleted;
+    private Boolean deleted;
 
     /**
      * 删除时间
@@ -60,7 +67,7 @@ public class ActivityEntity {
     /**
      * 扩展字段
      */
-    private String features;
+    private JSONObject features;
 
     /**
      * 乐观锁版本号
@@ -144,11 +151,11 @@ public class ActivityEntity {
         this.remark = remark;
     }
 
-    public Long getDeleted() {
+    public Boolean getDeleted() {
         return deleted;
     }
 
-    public void setDeleted(Long deleted) {
+    public void setDeleted(Boolean deleted) {
         this.deleted = deleted;
     }
 
@@ -160,11 +167,11 @@ public class ActivityEntity {
         this.deletedDate = deletedDate;
     }
 
-    public String getFeatures() {
+    public JSONObject getFeatures() {
         return features;
     }
 
-    public void setFeatures(String features) {
+    public void setFeatures(JSONObject features) {
         this.features = features;
     }
 
@@ -213,18 +220,18 @@ public class ActivityEntity {
         return new StringJoiner(",",ActivityEntity.class.getSimpleName() + "[","]")
                 .add("id=" + id)
                 .add("name=" + name + "'")
-                .add("activityType" + activityType + "'")
-                .add("startTime" + startTime + "'")
-                .add("endTime" + endTime + "'")
-                .add("status" + status + "'")
+                .add("activityType" + activityType)
+                .add("startTime" + startTime)
+                .add("endTime" + endTime)
+                .add("status" + status)
                 .add("remark" + remark + "'")
-                .add("deleted" + deleted + "'")
-                .add("deletedDate" + deletedDate + "'")
-                .add("features" + features + "'")
-                .add("lockVersion" + lockVersion + "'")
-                .add("createdDate" + createdDate + "'")
+                .add("deleted" + deleted)
+                .add("deletedDate" + deletedDate)
+                .add("features" + features)
+                .add("lockVersion" + lockVersion)
+                .add("createdDate" + createdDate)
                 .add("createdBy" + createdBy + "'")
-                .add("updatedDate" + updatedDate + "'")
+                .add("updatedDate" + updatedDate)
                 .add("updatedBy" + updatedBy + "'")
                 .toString();
     }

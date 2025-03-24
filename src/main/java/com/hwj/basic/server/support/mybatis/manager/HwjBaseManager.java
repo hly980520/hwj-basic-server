@@ -163,6 +163,19 @@ public abstract class HwjBaseManager<M extends HwjBaseMapper<T>, T, Q> {
     }
 
     /**
+     * 根据id删除记录
+     * @param id
+     * @return
+     */
+    public boolean deletedById(Long id){
+        if (Objects.isNull(id)) {
+            return false;
+        }
+        return this.baseMapper.deleteById(id) > 0;
+    }
+
+
+    /**
      * 转分页查询参数
      *
      * @param page 分页查询参数
