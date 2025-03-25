@@ -1,4 +1,4 @@
-package com.hwj.basic.server.activity.entity;
+package com.hwj.basic.server.member.entity;
 
 import com.alibaba.fastjson2.JSONObject;
 import com.baomidou.mybatisplus.annotation.*;
@@ -7,14 +7,16 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.StringJoiner;
 
-
 /**
- * @author hwj
+ * @Program: hwj
+ * @Description: 礼品定义实体类
+ * @author: wenjing.huang
+ * @since: 2025-03-17 15:03:24
  */
-@TableName(value = "activity_define",autoResultMap = true)
-public class ActivityEntity implements Serializable {
+@TableName(value = "gift_define", autoResultMap = true)
+public class GiftEntity implements Serializable {
 
-    private static final long serialVersionUID = 1440087550741126144L;
+    private static final long serialVersionUID = -8236087116902541919L;
     /**
      * id
      */
@@ -22,24 +24,14 @@ public class ActivityEntity implements Serializable {
     private Long id;
 
     /**
-     * 活动名称
+     * 礼品名称
      */
     private String name;
 
     /**
-     * 活动类型
+     * 礼品类型
      */
-    private Integer activityType;
-
-    /**
-     * 开始时间
-     */
-    private LocalDateTime startTime;
-
-    /**
-     * 结束时间
-     */
-    private LocalDateTime endTime;
+    private Integer giftType;
 
     /**
      * 活动状态[0:草稿 1:上线 2:下线]
@@ -54,7 +46,7 @@ public class ActivityEntity implements Serializable {
     /**
      * 是否删除[否:0 是:记录id]
      */
-    private Boolean deleted;
+    private Long deleted;
 
     /**
      * 删除时间
@@ -86,7 +78,7 @@ public class ActivityEntity implements Serializable {
     /**
      * 更新时间
      */
-    @TableField(fill = FieldFill.INSERT)
+    @TableField(fill = FieldFill.INSERT_UPDATE)
     private LocalDateTime updatedDate;
 
     /**
@@ -110,28 +102,12 @@ public class ActivityEntity implements Serializable {
         this.name = name;
     }
 
-    public Integer getActivityType() {
-        return activityType;
+    public Integer getGiftType() {
+        return giftType;
     }
 
-    public void setActivityType(Integer activityType) {
-        this.activityType = activityType;
-    }
-
-    public LocalDateTime getStartTime() {
-        return startTime;
-    }
-
-    public void setStartTime(LocalDateTime startTime) {
-        this.startTime = startTime;
-    }
-
-    public LocalDateTime getEndTime() {
-        return endTime;
-    }
-
-    public void setEndTime(LocalDateTime endTime) {
-        this.endTime = endTime;
+    public void setGiftType(Integer giftType) {
+        this.giftType = giftType;
     }
 
     public Integer getStatus() {
@@ -150,11 +126,11 @@ public class ActivityEntity implements Serializable {
         this.remark = remark;
     }
 
-    public Boolean getDeleted() {
+    public Long getDeleted() {
         return deleted;
     }
 
-    public void setDeleted(Boolean deleted) {
+    public void setDeleted(Long deleted) {
         this.deleted = deleted;
     }
 
@@ -216,22 +192,20 @@ public class ActivityEntity implements Serializable {
 
     @Override
     public String toString() {
-        return new StringJoiner(",",ActivityEntity.class.getSimpleName() + "[","]")
+        return new StringJoiner(", ", GiftEntity.class.getSimpleName() + "[", "]")
                 .add("id=" + id)
-                .add("name=" + name + "'")
-                .add("activityType" + activityType)
-                .add("startTime" + startTime)
-                .add("endTime" + endTime)
-                .add("status" + status)
-                .add("remark" + remark + "'")
-                .add("deleted" + deleted)
-                .add("deletedDate" + deletedDate)
-                .add("features" + features)
-                .add("lockVersion" + lockVersion)
-                .add("createdDate" + createdDate)
-                .add("createdBy" + createdBy + "'")
-                .add("updatedDate" + updatedDate)
-                .add("updatedBy" + updatedBy + "'")
+                .add("name='" + name + "'")
+                .add("giftType=" + giftType)
+                .add("status=" + status)
+                .add("remark='" + remark + "'")
+                .add("deleted=" + deleted)
+                .add("deletedDate=" + deletedDate)
+                .add("features=" + features)
+                .add("lockVersion=" + lockVersion)
+                .add("createdDate=" + createdDate)
+                .add("createdBy='" + createdBy + "'")
+                .add("updatedDate=" + updatedDate)
+                .add("updatedBy='" + updatedBy + "'")
                 .toString();
     }
 }

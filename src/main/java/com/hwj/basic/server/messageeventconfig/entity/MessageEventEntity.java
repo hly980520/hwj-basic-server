@@ -1,4 +1,4 @@
-package com.hwj.basic.server.activity.entity;
+package com.hwj.basic.server.messageeventconfig.entity;
 
 import com.alibaba.fastjson2.JSONObject;
 import com.baomidou.mybatisplus.annotation.*;
@@ -7,91 +7,58 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.StringJoiner;
 
+@TableName(value = "message_event_config",autoResultMap = true)
+public class MessageEventEntity implements Serializable {
 
-/**
- * @author hwj
- */
-@TableName(value = "activity_define",autoResultMap = true)
-public class ActivityEntity implements Serializable {
+    private static final long serialVersionUID = 5599060968689474086L;
 
-    private static final long serialVersionUID = 1440087550741126144L;
-    /**
-     * id
-     */
     @TableId(type = IdType.AUTO)
     private Long id;
 
     /**
-     * 活动名称
+     * 事件名称
      */
-    private String name;
+    private String eventName;
 
     /**
-     * 活动类型
+     * 事件代码
      */
-    private Integer activityType;
+    private String eventCode;
 
     /**
-     * 开始时间
+     * 消息模板代码
      */
-    private LocalDateTime startTime;
+    private String messageTemplateCode;
 
     /**
-     * 结束时间
+     * 接收人类型[0:指定用户,1:指定手机号]
      */
-    private LocalDateTime endTime;
+    private Integer receiveType;
 
     /**
-     * 活动状态[0:草稿 1:上线 2:下线]
+     * 状态[0:禁用,1:启用]
      */
     private Integer status;
 
-    /**
-     * 备注
-     */
     private String remark;
 
-    /**
-     * 是否删除[否:0 是:记录id]
-     */
     private Boolean deleted;
 
-    /**
-     * 删除时间
-     */
     private LocalDateTime deletedDate;
 
-    /**
-     * 扩展字段
-     */
     private JSONObject features;
 
-    /**
-     * 乐观锁版本号
-     */
     @Version
     private Integer lockVersion;
 
-    /**
-     * 创建时间
-     */
-    @TableField(fill = FieldFill.INSERT)
+    @TableField(fill = FieldFill.INSERT_UPDATE)
     private LocalDateTime createdDate;
 
-    /**
-     * 创建人
-     */
     private String createdBy;
 
-    /**
-     * 更新时间
-     */
-    @TableField(fill = FieldFill.INSERT)
+    @TableField(fill = FieldFill.INSERT_UPDATE)
     private LocalDateTime updatedDate;
 
-    /**
-     * 更新人
-     */
     private String updatedBy;
 
     public Long getId() {
@@ -102,36 +69,36 @@ public class ActivityEntity implements Serializable {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getEventName() {
+        return eventName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setEventName(String eventName) {
+        this.eventName = eventName;
     }
 
-    public Integer getActivityType() {
-        return activityType;
+    public String getEventCode() {
+        return eventCode;
     }
 
-    public void setActivityType(Integer activityType) {
-        this.activityType = activityType;
+    public void setEventCode(String eventCode) {
+        this.eventCode = eventCode;
     }
 
-    public LocalDateTime getStartTime() {
-        return startTime;
+    public String getMessageTemplateCode() {
+        return messageTemplateCode;
     }
 
-    public void setStartTime(LocalDateTime startTime) {
-        this.startTime = startTime;
+    public void setMessageTemplateCode(String messageTemplateCode) {
+        this.messageTemplateCode = messageTemplateCode;
     }
 
-    public LocalDateTime getEndTime() {
-        return endTime;
+    public Integer getReceiveType() {
+        return receiveType;
     }
 
-    public void setEndTime(LocalDateTime endTime) {
-        this.endTime = endTime;
+    public void setReceiveType(Integer receiveType) {
+        this.receiveType = receiveType;
     }
 
     public Integer getStatus() {
@@ -216,22 +183,22 @@ public class ActivityEntity implements Serializable {
 
     @Override
     public String toString() {
-        return new StringJoiner(",",ActivityEntity.class.getSimpleName() + "[","]")
+        return new StringJoiner(", ", MessageEventEntity.class.getSimpleName() + "[", "]")
                 .add("id=" + id)
-                .add("name=" + name + "'")
-                .add("activityType" + activityType)
-                .add("startTime" + startTime)
-                .add("endTime" + endTime)
-                .add("status" + status)
-                .add("remark" + remark + "'")
-                .add("deleted" + deleted)
-                .add("deletedDate" + deletedDate)
-                .add("features" + features)
-                .add("lockVersion" + lockVersion)
-                .add("createdDate" + createdDate)
-                .add("createdBy" + createdBy + "'")
-                .add("updatedDate" + updatedDate)
-                .add("updatedBy" + updatedBy + "'")
+                .add("eventName='" + eventName + "'")
+                .add("eventCode='" + eventCode + "'")
+                .add("messageTemplateCode='" + messageTemplateCode + "'")
+                .add("receiveType='" + receiveType)
+                .add("status='" + status)
+                .add("remark='" + remark + "'")
+                .add("deleted=" + deleted)
+                .add("deletedDate=" + deletedDate)
+                .add("features=" + features)
+                .add("lockVersion=" + lockVersion)
+                .add("createdDate=" + createdDate)
+                .add("createdBy='" + createdBy + "'")
+                .add("updatedDate=" + updatedDate)
+                .add("updatedBy='" + updatedBy + "'")
                 .toString();
     }
 }

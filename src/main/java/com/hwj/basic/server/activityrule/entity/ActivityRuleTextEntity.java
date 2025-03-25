@@ -1,15 +1,15 @@
 package com.hwj.basic.server.activityrule.entity;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
-import com.baomidou.mybatisplus.annotation.Version;
+import com.baomidou.mybatisplus.annotation.*;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.StringJoiner;
 
 @TableName(value = "activity_rule_text",autoResultMap = true)
-public class ActivityRuleText {
+public class ActivityRuleTextEntity implements Serializable {
+
+    private static final long serialVersionUID = -7486606677910998072L;
 
     @TableId(type = IdType.AUTO)
     private Long id;
@@ -25,10 +25,12 @@ public class ActivityRuleText {
     @Version
     private Integer lockVersion;
 
+    @TableField(fill = FieldFill.INSERT)
     private LocalDateTime createdDate;
 
     private String createdBy;
 
+    @TableField(fill = FieldFill.INSERT)
     private LocalDateTime updatedDate;
 
     private String updatedBy;
@@ -115,17 +117,17 @@ public class ActivityRuleText {
 
     @Override
     public String toString() {
-        return new StringJoiner(", ", ActivityRuleText.class.getSimpleName() + "[", "]")
+        return new StringJoiner(", ", ActivityRuleTextEntity.class.getSimpleName() + "[", "]")
                 .add("id=" + id)
-                .add("activityId='" + activityId + "'")
+                .add("activityId='" + activityId)
                 .add("ruleText='" + ruleText + "'")
-                .add("deleted='" + deleted + "'")
-                .add("deletedDate='" + deletedDate + "'")
-                .add("lockVersion='" + lockVersion + "'")
-                .add("createdDate='" + createdDate + "'")
+                .add("deleted='" + deleted)
+                .add("deletedDate='" + deletedDate)
+                .add("lockVersion='" + lockVersion)
+                .add("createdDate='" + createdDate)
                 .add("createdBy='" + createdBy + "'")
                 .add("updatedDate=" + updatedDate)
-                .add("updatedBy=" + updatedBy)
+                .add("updatedBy=" + updatedBy + "'")
                 .toString();
     }
 }

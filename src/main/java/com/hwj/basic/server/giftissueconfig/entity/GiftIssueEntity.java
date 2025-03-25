@@ -1,4 +1,4 @@
-package com.hwj.basic.server.activity.entity;
+package com.hwj.basic.server.giftissueconfig.entity;
 
 import com.alibaba.fastjson2.JSONObject;
 import com.baomidou.mybatisplus.annotation.*;
@@ -7,14 +7,16 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.StringJoiner;
 
-
 /**
- * @author hwj
+ * @Program: hwj
+ * @Description: 礼品发放流水实体类
+ * @author: wenjing.huang
+ * @since: 2025-03-17 15:03:24
  */
-@TableName(value = "activity_define",autoResultMap = true)
-public class ActivityEntity implements Serializable {
+@TableName(value = "gift_issue_log", autoResultMap = true)
+public class GiftIssueEntity implements Serializable {
 
-    private static final long serialVersionUID = 1440087550741126144L;
+    private static final long serialVersionUID = 6704694315173465700L;
     /**
      * id
      */
@@ -22,29 +24,29 @@ public class ActivityEntity implements Serializable {
     private Long id;
 
     /**
-     * 活动名称
+     * 用户id
      */
-    private String name;
+    private Long memberId;
 
     /**
-     * 活动类型
+     * 礼品信息列表
      */
-    private Integer activityType;
+    private String giftInfos;
 
     /**
-     * 开始时间
+     * 处理状态[0:待处理 1:处理中 2:处理成功 3: 处理失败]
      */
-    private LocalDateTime startTime;
+    private Integer processStatus;
 
     /**
-     * 结束时间
+     * 来源类型
      */
-    private LocalDateTime endTime;
+    private Integer sourceType;
 
     /**
-     * 活动状态[0:草稿 1:上线 2:下线]
+     * 来源id
      */
-    private Integer status;
+    private Long sourceId;
 
     /**
      * 备注
@@ -54,7 +56,7 @@ public class ActivityEntity implements Serializable {
     /**
      * 是否删除[否:0 是:记录id]
      */
-    private Boolean deleted;
+    private Long deleted;
 
     /**
      * 删除时间
@@ -86,7 +88,7 @@ public class ActivityEntity implements Serializable {
     /**
      * 更新时间
      */
-    @TableField(fill = FieldFill.INSERT)
+    @TableField(fill = FieldFill.INSERT_UPDATE)
     private LocalDateTime updatedDate;
 
     /**
@@ -102,44 +104,44 @@ public class ActivityEntity implements Serializable {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public Long getMemberId() {
+        return memberId;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setMemberId(Long memberId) {
+        this.memberId = memberId;
     }
 
-    public Integer getActivityType() {
-        return activityType;
+    public String getGiftInfos() {
+        return giftInfos;
     }
 
-    public void setActivityType(Integer activityType) {
-        this.activityType = activityType;
+    public void setGiftInfos(String giftInfos) {
+        this.giftInfos = giftInfos;
     }
 
-    public LocalDateTime getStartTime() {
-        return startTime;
+    public Integer getProcessStatus() {
+        return processStatus;
     }
 
-    public void setStartTime(LocalDateTime startTime) {
-        this.startTime = startTime;
+    public void setProcessStatus(Integer processStatus) {
+        this.processStatus = processStatus;
     }
 
-    public LocalDateTime getEndTime() {
-        return endTime;
+    public Integer getSourceType() {
+        return sourceType;
     }
 
-    public void setEndTime(LocalDateTime endTime) {
-        this.endTime = endTime;
+    public void setSourceType(Integer sourceType) {
+        this.sourceType = sourceType;
     }
 
-    public Integer getStatus() {
-        return status;
+    public Long getSourceId() {
+        return sourceId;
     }
 
-    public void setStatus(Integer status) {
-        this.status = status;
+    public void setSourceId(Long sourceId) {
+        this.sourceId = sourceId;
     }
 
     public String getRemark() {
@@ -150,11 +152,11 @@ public class ActivityEntity implements Serializable {
         this.remark = remark;
     }
 
-    public Boolean getDeleted() {
+    public Long getDeleted() {
         return deleted;
     }
 
-    public void setDeleted(Boolean deleted) {
+    public void setDeleted(Long deleted) {
         this.deleted = deleted;
     }
 
@@ -216,22 +218,22 @@ public class ActivityEntity implements Serializable {
 
     @Override
     public String toString() {
-        return new StringJoiner(",",ActivityEntity.class.getSimpleName() + "[","]")
+        return new StringJoiner(", ", GiftIssueEntity.class.getSimpleName() + "[", "]")
                 .add("id=" + id)
-                .add("name=" + name + "'")
-                .add("activityType" + activityType)
-                .add("startTime" + startTime)
-                .add("endTime" + endTime)
-                .add("status" + status)
-                .add("remark" + remark + "'")
-                .add("deleted" + deleted)
-                .add("deletedDate" + deletedDate)
-                .add("features" + features)
-                .add("lockVersion" + lockVersion)
-                .add("createdDate" + createdDate)
-                .add("createdBy" + createdBy + "'")
-                .add("updatedDate" + updatedDate)
-                .add("updatedBy" + updatedBy + "'")
+                .add("memberId=" + memberId)
+                .add("giftInfos='" + giftInfos + "'")
+                .add("processStatus=" + processStatus)
+                .add("sourceType=" + sourceType)
+                .add("sourceId=" + sourceId)
+                .add("remark='" + remark + "'")
+                .add("deleted=" + deleted)
+                .add("deletedDate=" + deletedDate)
+                .add("features=" + features)
+                .add("lockVersion=" + lockVersion)
+                .add("createdDate=" + createdDate)
+                .add("createdBy='" + createdBy + "'")
+                .add("updatedDate=" + updatedDate)
+                .add("updatedBy='" + updatedBy + "'")
                 .toString();
     }
 }
