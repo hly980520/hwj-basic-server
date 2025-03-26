@@ -12,7 +12,8 @@ import java.util.StringJoiner;
  */
 @TableName(value = "member_gift", autoResultMap = true)
 public class MemberGiftEntity implements Serializable {
-    private static final long serialVersionUID = 1L;
+
+    private static final long serialVersionUID = -3469990884795573914L;
 
     /**
      * id

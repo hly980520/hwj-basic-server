@@ -34,6 +34,30 @@ public class ActivityMemberWriteServiceImpl implements ActivityMemberWriteServic
 
 
     @Override
+    public RpcResult<ActivityMemberDTO> create(ActivityMemberDTO activityMemberDTO) {
+        if (Objects.isNull(activityMemberDTO)){
+            LOGGER.warn("ActivityMember Create Failed: ActivityMemberDTO Is Null");
+            return ErrorCode.PARAMS_MISS.toRpcResult();
+        }
+
+        ActivityMemberEntity entity = activityMemberEntityConverter.from(activityMemberDTO);
+
+        try {
+            boolean success = activityMemberEntityManager.insert(entity);
+            if (!success){
+                LOGGER.warn("ActivityMember Create Failed: Insert Database Failed");
+                return ErrorCode.INSERT_FAILED.toRpcResult();
+            }
+            ActivityMemberDTO data = activityMemberEntityConverter.toDTO(entity);
+            return RpcResult.success(data);
+        }catch (Exception e){
+            LOGGER.error("ActivityMember Create Failed: System Exception,[{}]",e.getMessage());
+            return ErrorCode.SYSTEM_EXCEPTION.toRpcResult();
+        }
+
+    }
+
+    @Override
     public RpcResult<ActivityMemberDTO> updateStatus(Long id) {
         if (Objects.isNull(id)){
             LOGGER.warn("ActivityMember updateStatus Failed: Id Is Null");
@@ -92,6 +116,31 @@ public class ActivityMemberWriteServiceImpl implements ActivityMemberWriteServic
             LOGGER.error("ActivityMember Update Failed: System Error [ID={}], Reason: {}", id, e.getMessage(), e);
             return ErrorCode.SYSTEM_EXCEPTION.toRpcResult();
         }
+    }
+
+    @Override
+    public RpcResult<ActivityMemberDTO> delete(Long id) {
+        if (Objects.isNull(id)){
+            LOGGER.warn("ActivityMember Delete Failed: Id Is Null");
+            return ErrorCode.PARAMS_MISS.toRpcResult();
+        }
+        if (id <= 0){
+            LOGGER.warn("ActivityMember Delete Failed: Id Is Invalid");
+            return ErrorCode.PARAMS_INVALID.toRpcResult();
+        }
+
+        try {
+            boolean success = activityMemberEntityManager.deletedById(id);
+            if (!success){
+                LOGGER.warn("ActivityMember Delete Failed: Delete Database Failded");
+                return ErrorCode.DELETE_FAILED.toRpcResult();
+            }
+            return RpcResult.success();
+        }catch (Exception e){
+            LOGGER.error("ActivityMember Delete Failed: System Error [ID={}], Reason: {}", id, e.getMessage(), e);
+            return ErrorCode.SYSTEM_EXCEPTION.toRpcResult();
+        }
+
     }
 
 }
