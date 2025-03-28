@@ -54,19 +54,27 @@ public class GiftIssueWriteServiceImpl implements GiftIssueWriteService {
             return ErrorCode.PARAMS_MISS.toRpcResult();
         }
         Long id = giftIssueDTO.getId();
-        if (id == null){
-            LOGGER.warn("GiftIssueConfig Update Failded: GiftIssue(Id) Not Exists");
-            return ErrorCode.UPDATE_FAILED.toRpcResult();
+        if (Objects.isNull(id) || id <= 0){
+            LOGGER.warn("GiftIssueConfig Update Failded: Id Is Invalid");
+            return ErrorCode.PARAMS_INVALID.toRpcResult();
         }
-        GiftIssueEntity params = giftIssueEntityConverter.from(giftIssueDTO);
-        params.setId(id);
+
         try {
+            GiftIssueEntity checkExists = giftIssueEntityManager.selectById(id);
+            if (checkExists == null){
+                LOGGER.warn("GiftIssueConfig Update Failded: GiftIssue(Id) Not Exists");
+                return ErrorCode.UPDATE_FAILED.toRpcResult();
+            }
+
+            GiftIssueEntity params = giftIssueEntityConverter.from(giftIssueDTO);
+            params.setId(id);
             boolean succcess = giftIssueEntityManager.updateById(params);
             if (!succcess){
                 LOGGER.warn("GiftIssueConfig Update Failded: Update Database Failed");
                 return ErrorCode.INSERT_FAILED.toRpcResult();
             }
-            GiftIssueDTO data = giftIssueEntityConverter.toDTO(params);
+            GiftIssueEntity lastEntity = giftIssueEntityManager.selectById(id);
+            GiftIssueDTO data = giftIssueEntityConverter.toDTO(lastEntity);
             return RpcResult.success(data);
         }catch (Exception e){
             LOGGER.error("GiftIssueConfig Update Failded: System Exception Failed,[{}]",e.getMessage());
@@ -79,6 +87,10 @@ public class GiftIssueWriteServiceImpl implements GiftIssueWriteService {
         if (Objects.isNull(id)){
             LOGGER.warn("GiftIssueConfig Delete Failded: Id Is Null");
             return ErrorCode.PARAMS_MISS.toRpcResult();
+        }
+        if (id <= 0){
+            LOGGER.warn("GiftIssueConfig Delete Failded: id Is Invalid");
+            return ErrorCode.PARAMS_INVALID.toRpcResult();
         }
 
         try {

@@ -51,7 +51,7 @@ public class MessageEventEntity implements Serializable {
     @Version
     private Integer lockVersion;
 
-    @TableField(fill = FieldFill.INSERT_UPDATE)
+    @TableField(fill = FieldFill.INSERT)
     private LocalDateTime createdDate;
 
     private String createdBy;

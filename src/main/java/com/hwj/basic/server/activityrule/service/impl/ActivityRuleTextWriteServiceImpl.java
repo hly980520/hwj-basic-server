@@ -63,20 +63,26 @@ public class ActivityRuleTextWriteServiceImpl implements ActivityRuleTextWriteSe
         }
 
         Long id = activityRuleTextDTO.getId();
-        if (id == null){
-            LOGGER.warn("ActivityRuleText Update Failded: ActivityRuleText Not Exists");
-            return ErrorCode.UPDATE_FAILED.toRpcResult();
+        if (Objects.isNull(id) || id <= 0){
+            LOGGER.warn("ActivityRuleText Update Failded: Id Is Invalid");
+            return ErrorCode.PARAMS_INVALID.toRpcResult();
         }
-        ActivityRuleTextEntity params = new ActivityRuleTextEntity();
-        params.setId(id);
 
         try {
+            ActivityRuleTextEntity checkExists = activityRuleTextManager.selectById(id);
+            if (checkExists == null){
+                LOGGER.warn("ActivityRuleText Update Failded: ActivityRuleText(Id) Not Exists");
+                return ErrorCode.UPDATE_FAILED.toRpcResult();
+            }
+            ActivityRuleTextEntity params = activityRuleTextEntityConverter.from(activityRuleTextDTO);
+            params.setId(id);
             boolean success = activityRuleTextManager.updateById(params);
             if (!success){
                 LOGGER.warn("ActivityRuleText Update Failded: Update Database Failded");
                 return ErrorCode.UPDATE_FAILED.toRpcResult();
             }
-            ActivityRuleTextDTO data = activityRuleTextEntityConverter.toDTO(params);
+            ActivityRuleTextEntity lastEntity = activityRuleTextManager.selectById(id);
+            ActivityRuleTextDTO data = activityRuleTextEntityConverter.toDTO(lastEntity);
             return RpcResult.success(data);
         }catch (Exception e){
             LOGGER.error("ActivityRuleText Update Failded: System Exception,[{}]",e.getMessage());
@@ -90,7 +96,10 @@ public class ActivityRuleTextWriteServiceImpl implements ActivityRuleTextWriteSe
             LOGGER.warn("ActivityRuleText Delete Failded: Id Is Null");
             return ErrorCode.PARAMS_MISS.toRpcResult();
         }
-
+        if (id <= 0){
+            LOGGER.warn("ActivityRuleText Delete Failded: id Is Invalid");
+            return ErrorCode.PARAMS_INVALID.toRpcResult();
+        }
         try {
             boolean success = activityRuleTextManager.deletedById(id);
             if (!success){

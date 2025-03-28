@@ -39,7 +39,6 @@ public class ActivityWriteServiceImpl implements ActivityWriteService {
     private RedisTemplate redisTemplate;
 
     @Override
-    @Transactional(rollbackFor = Exception.class)
     public RpcResult<ActivityDTO> create(ActivityDTO activityDTO) {
         if (Objects.isNull(activityDTO)){
             LOGGER.warn("Create Activity Failed:Invaild Paraments");
@@ -101,15 +100,18 @@ public class ActivityWriteServiceImpl implements ActivityWriteService {
     @Override
     public RpcResult<ActivityDTO> deletedById(Long id) {
         if (Objects.isNull(id)){
-            LOGGER.warn("Deleted Failed: Id Is Null");
+            LOGGER.warn("Activity Deleted Failed: Id Is Null");
             return ErrorCode.PARAMS_MISS.toRpcResult();
+        }
+        if (id <= 0){
+            LOGGER.warn("Activity Delete Failed: Id Is Invalid");
+            return ErrorCode.PARAMS_INVALID.toRpcResult();
         }
         boolean success = activityEntityManager.deletedById(id);
         return success ? RpcResult.success() : ErrorCode.DELETE_FAILED.toRpcResult();
     }
 
     @Override
-    @Transactional(rollbackFor = Exception.class)
     public RpcResult<ActivityDTO> update(ActivityDTO activityDTO) {
         if (Objects.isNull(activityDTO)){
             LOGGER.warn("Update Failed: ActivityDTO Is Null");

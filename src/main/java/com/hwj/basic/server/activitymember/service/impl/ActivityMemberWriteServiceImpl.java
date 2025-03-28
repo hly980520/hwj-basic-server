@@ -80,7 +80,6 @@ public class ActivityMemberWriteServiceImpl implements ActivityMemberWriteServic
     }
 
     @Override
-    @Transactional(rollbackFor = Exception.class)
     public RpcResult<ActivityMemberDTO> update(ActivityMemberDTO activityMemberDTO) {
         if (Objects.isNull(activityMemberDTO)){
             LOGGER.warn("ActivityMember Update Failed: activityMemberDTO Is Null");

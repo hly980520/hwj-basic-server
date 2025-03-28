@@ -98,6 +98,17 @@ public class ActivityReadServiceImpl implements ActivityReadService {
     }
 
     @Override
+    public RpcResult<List<ActivityDTO>> queryActivityList(List<Long> ids) {
+        if (ids.isEmpty()){
+            LOGGER.warn("Activity queryActivityList Failed: ids Is Null");
+            return ErrorCode.PARAMS_MISS.toRpcResult();
+        }
+        List<ActivityEntity> activityEntities = activityEntityManager.selectByIds(ids);
+        List<ActivityDTO> datas = activityEntityConverter.toDTOList(activityEntities);
+        return RpcResult.success(datas);
+    }
+
+    @Override
     public RpcResult<DataPage<ActivityDTO>> queryPage(DataPage<ActivityDTO> dataPage, ActivityDTO activityDTO) {
         if (Objects.isNull(dataPage) || Objects.isNull(activityDTO)) {
             LOGGER.warn("dataPage Is Null Or Member Is Null");

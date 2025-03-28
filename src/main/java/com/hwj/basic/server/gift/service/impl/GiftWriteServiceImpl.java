@@ -55,20 +55,27 @@ public class GiftWriteServiceImpl implements GiftWriteService {
             return ErrorCode.PARAMS_MISS.toRpcResult();
         }
         Long id = giftDTO.getId();
-        if (id == null){
-            LOGGER.warn("Gift Update Failded: Gift(Id) Not Exists");
-            return ErrorCode.UPDATE_FAILED.toRpcResult();
+        if (Objects.isNull(id) || id <= 0){
+            LOGGER.warn("Gift Update Failded: Id Is Invalid");
+            return ErrorCode.PARAMS_INVALID.toRpcResult();
         }
-        GiftEntity params = new GiftEntity();
-        params.setId(id);
 
         try {
+            GiftEntity checkExists = giftEntityManager.selectById(id);
+            if (checkExists == null){
+                LOGGER.warn("Gift Update Failded: Gift(Id) Not Exists");
+                return ErrorCode.UPDATE_FAILED.toRpcResult();
+            }
+
+            GiftEntity params = giftEntityConverter.from(giftDTO);
+            params.setId(id);
             boolean success = giftEntityManager.updateById(params);
             if (!success){
                 LOGGER.warn("Gift Update Failded: Update Database Failed");
                 return ErrorCode.UPDATE_FAILED.toRpcResult();
             }
-            GiftDTO data = giftEntityConverter.toDTO(params);
+            GiftEntity lastEntity = giftEntityManager.selectById(id);
+            GiftDTO data = giftEntityConverter.toDTO(lastEntity);
             return RpcResult.success(data);
         }catch (Exception e){
             LOGGER.error("Gift Update Failded: System Exception Failed,[{}]",e.getMessage());
@@ -81,6 +88,10 @@ public class GiftWriteServiceImpl implements GiftWriteService {
         if (Objects.isNull(id)){
             LOGGER.warn("Gift Delete Failded: id Is Null");
             return ErrorCode.PARAMS_MISS.toRpcResult();
+        }
+        if (id <= 0){
+            LOGGER.warn("Gift Delete Failded: id Is Invalid");
+            return ErrorCode.PARAMS_INVALID.toRpcResult();
         }
         try {
             boolean success = giftEntityManager.deletedById(id);

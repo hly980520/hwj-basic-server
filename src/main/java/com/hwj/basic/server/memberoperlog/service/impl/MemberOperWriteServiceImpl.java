@@ -55,18 +55,27 @@ public class MemberOperWriteServiceImpl implements MemberOperWriteService {
         }
         Long id = memberOperDTO.getId();
         if (Objects.isNull(id) || id <= 0){
-            LOGGER.warn("MemberOperLog Update Failded: MemberOperLog(Id) Not Exists");
-            return ErrorCode.UPDATE_FAILED.toRpcResult();
+            LOGGER.warn("MemberOperLog Update Failded: Id Is Invalid");
+            return ErrorCode.PARAMS_INVALID.toRpcResult();
         }
-        MemberOperEntity params = new MemberOperEntity();
-        params.setId(id);
+
         try {
+            MemberOperEntity checkExists = memberOperManager.selectById(id);
+            if (checkExists == null){
+                LOGGER.warn("MemberOperLog Update Failded: MemberOperLog(Id) Not Exists");
+                return ErrorCode.UPDATE_FAILED.toRpcResult();
+            }
+            MemberOperEntity params = memberOperEntityConverter.from(memberOperDTO);
+            params.setId(id);
             boolean success = memberOperManager.updateById(params);
             if (!success){
                 LOGGER.warn("MemberOperLog Update Failded: Update Database Failed");
                 return ErrorCode.INSERT_FAILED.toRpcResult();
             }
-            MemberOperDTO data = memberOperEntityConverter.toDTO(params);
+
+            MemberOperEntity lastEntity = memberOperManager.selectById(id);
+
+            MemberOperDTO data = memberOperEntityConverter.toDTO(lastEntity);
             return RpcResult.success(data);
         }catch (Exception e){
             LOGGER.error("MemberOperLog Update Failded: System Exception,[{}]",e.getMessage());

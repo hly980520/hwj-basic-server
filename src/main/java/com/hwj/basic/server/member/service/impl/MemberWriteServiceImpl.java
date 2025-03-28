@@ -88,11 +88,32 @@ public class MemberWriteServiceImpl implements MemberWriteService {
         boolean update = memberEntityManager.updateById(data);
         if (!update) {
             LOGGER.warn("Update failed [{}]", data);
-            return ErrorCode.INSERT_FAILED.toRpcResult();
+            return ErrorCode.UPDATE_FAILED.toRpcResult();
         }
 
         data = memberEntityManager.selectById(member.getId());
         Member domain = memberEntityConverter.toDomain(data);
         return RpcResult.success(domain);
     }
+
+    @Override
+    public RpcResult<Member> delete(Long id) {
+        if (Objects.isNull(id)){
+            LOGGER.warn("Delete Failed: Id Is Null");
+            return ErrorCode.PARAMS_MISS.toRpcResult();
+        }
+        if (id <= 0){
+            LOGGER.warn("Delete Failed: Id Is Invalid");
+            return ErrorCode.PARAMS_INVALID.toRpcResult();
+        }
+
+        boolean deleted = memberEntityManager.deletedById(id);
+        if (!deleted){
+            LOGGER.warn("Delete failed " );
+            return ErrorCode.INSERT_FAILED.toRpcResult();
+        }
+        return RpcResult.success();
+    }
+
+
 }

@@ -56,19 +56,29 @@ public class MessageEventWriteServiceImpl implements MessageEventWriteService {
         }
         Long id = messageEventDTO.getId();
         if (Objects.isNull(id) || id <= 0){
-            LOGGER.warn("MessageEventConfig Update Failded: MessageEvent(Id) Not Exists");
+            LOGGER.warn("MessageEventConfig Update Failded:Id Is Invalid");
             return ErrorCode.PARAMS_INVALID.toRpcResult();
         }
-        MessageEventEntity params = new MessageEventEntity();
-        params.setId(id);
 
         try {
+            MessageEventEntity checkExists = messageEventManager.selectById(id);
+            if (checkExists == null){
+                LOGGER.warn("MessageEventConfig Update Failded: MessageEvent(Id) Not Exists");
+                return ErrorCode.PARAMS_INVALID.toRpcResult();
+            }
+
+            MessageEventEntity params = messageEventEntityConverter.from(messageEventDTO);
+            params.setId(id);
+
             boolean success = messageEventManager.updateById(params);
             if (!success){
                 LOGGER.warn("MessageEventConfig Update Failded: Update Database Failded");
                 return ErrorCode.UPDATE_FAILED.toRpcResult();
             }
-            MessageEventDTO data = messageEventEntityConverter.toDTO(params);
+
+            MessageEventEntity lastEntity = messageEventManager.selectById(id);
+
+            MessageEventDTO data = messageEventEntityConverter.toDTO(lastEntity);
             return RpcResult.success(data);
         }catch (Exception e){
             LOGGER.error("MessageEventConfig Update Failded: System Exception,[{}]",e.getMessage());
@@ -81,6 +91,10 @@ public class MessageEventWriteServiceImpl implements MessageEventWriteService {
         if (Objects.isNull(id)){
             LOGGER.warn("MessageEventConfig Delete Failded: Id Is Null");
             return ErrorCode.PARAMS_MISS.toRpcResult();
+        }
+        if (id <= 0){
+            LOGGER.warn("MessageEventConfig Delete Failed: Id Is Invalid");
+            return ErrorCode.PARAMS_INVALID.toRpcResult();
         }
         try {
             boolean success = messageEventManager.deletedById(id);

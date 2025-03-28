@@ -61,19 +61,28 @@ public class MessageSendWriteServiceImpl implements MessageSendWriteService {
             return ErrorCode.PARAMS_MISS.toRpcResult();
         }
         Long id = messageSendDTO.getId();
-        if (id == null){
-            LOGGER.warn("MessageSendLog Update Failded: MessageSend(Id) Not Exists,[id={}]",id);
-            return ErrorCode.UPDATE_FAILED.toRpcResult();
+        if (Objects.isNull(id) || id <= 0){
+            LOGGER.warn("MessageSendLog Update Failded: Id Is Invalid,[id={}]",id);
+            return ErrorCode.PARAMS_INVALID.toRpcResult();
         }
-        MessageSendEntity params = new MessageSendEntity();
-        params.setId(id);
+
         try {
+            MessageSendEntity checkExists = messageSendManager.selectById(id);
+            if (checkExists == null){
+                LOGGER.warn("MessageSendLog Update Failded: MessageSendLog(Id) Not Exists");
+                return ErrorCode.UPDATE_FAILED.toRpcResult();
+            }
+
+            MessageSendEntity params = messageSendEntityConverter.from(messageSendDTO);
+            params.setId(id);
             boolean success = messageSendManager.updateById(params);
             if (!success){
                 LOGGER.warn("MessageSendLog Update Failded: Update Database Failded");
                 return ErrorCode.UPDATE_FAILED.toRpcResult();
             }
-            MessageSendDTO data = messageSendEntityConverter.toDTO(params);
+
+            MessageSendEntity lastEntity = messageSendManager.selectById(id);
+            MessageSendDTO data = messageSendEntityConverter.toDTO(lastEntity);
             return RpcResult.success(data);
         }catch (Exception e){
             LOGGER.error("MessageSendLog Update Failded: System Exception Failded,[{}]",e.getMessage());
@@ -88,7 +97,10 @@ public class MessageSendWriteServiceImpl implements MessageSendWriteService {
             LOGGER.warn("MessageSendLog Delete Failded: Id Is Null");
             return ErrorCode.PARAMS_MISS.toRpcResult();
         }
-
+        if (id <= 0){
+            LOGGER.warn("MessageSendLog Delete Failed: Id Is Invalid");
+            return ErrorCode.PARAMS_INVALID.toRpcResult();
+        }
         try {
             boolean success = messageSendManager.deletedById(id);
             if (!success){

@@ -1,4 +1,9 @@
 package com.hwj.basic.server.membermissionreward.mapper;
 
-public class MemberMissionRewardMapper {
+import com.hwj.basic.server.membermissionreward.entity.MemberMissionRewardEntity;
+import com.hwj.basic.server.support.mybatis.mapper.HwjBaseMapper;
+import org.apache.ibatis.annotations.Mapper;
+
+@Mapper
+public interface MemberMissionRewardMapper extends HwjBaseMapper<MemberMissionRewardEntity> {
 }

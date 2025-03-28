@@ -77,22 +77,21 @@ public class ActivityTaskWriteServiceImpl implements ActivityTaskWriteService {
             return ErrorCode.PARAMS_INVALID.toRpcResult();
         }
 
-        ActivityTaskEntity checkExist = activityTaskManager.selectById(id);
-        if (Objects.isNull(checkExist)){
-            LOGGER.warn("ActivityTask Update Failed: ActivityTask Not Found,[id={}]",id);
-            return ErrorCode.UPDATE_FAILED.toRpcResult();
-        }
-
-        ActivityTaskEntity entity = activityTaskConverter.from(activityTaskDTO);
-        entity.setId(id);
-
         try {
+            ActivityTaskEntity checkExist = activityTaskManager.selectById(id);
+            if (Objects.isNull(checkExist)){
+                LOGGER.warn("ActivityTask Update Failed: ActivityTask Not Found,[id={}]",id);
+                return ErrorCode.UPDATE_FAILED.toRpcResult();
+            }
+
+            ActivityTaskEntity entity = activityTaskConverter.from(activityTaskDTO);
+            entity.setId(id);
             boolean success = activityTaskManager.updateById(entity);
             if (!success){
                 LOGGER.warn("ActivityTask Update Failed: Update Databases Error");
                 return ErrorCode.UPDATE_FAILED.toRpcResult();
             }
-            ActivityTaskEntity lastEntity = activityTaskManager.selectOne(entity);
+            ActivityTaskEntity lastEntity = activityTaskManager.selectById(id);
             ActivityTaskDTO data = activityTaskConverter.toDTO(lastEntity);
             return RpcResult.success(data);
         }catch (Exception e){

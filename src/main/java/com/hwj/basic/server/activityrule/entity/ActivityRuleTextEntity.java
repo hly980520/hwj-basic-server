@@ -30,7 +30,7 @@ public class ActivityRuleTextEntity implements Serializable {
 
     private String createdBy;
 
-    @TableField(fill = FieldFill.INSERT)
+    @TableField(fill = FieldFill.INSERT_UPDATE)
     private LocalDateTime updatedDate;
 
     private String updatedBy;

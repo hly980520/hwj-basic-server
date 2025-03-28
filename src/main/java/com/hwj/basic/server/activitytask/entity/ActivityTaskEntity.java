@@ -83,7 +83,7 @@ public class ActivityTaskEntity implements Serializable {
     /**
      * 更新时间
      */
-    @TableField(fill = FieldFill.INSERT)
+    @TableField(fill = FieldFill.INSERT_UPDATE)
     private LocalDateTime updatedDate;
 
     /**
