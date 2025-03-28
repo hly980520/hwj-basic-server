@@ -78,6 +78,22 @@ public class GiftIssueReadServiceImpl implements GiftIssueReadService {
     }
 
     @Override
+    public RpcResult<Integer> countByGiftId(Long giftId) {
+        if (Objects.isNull(giftId)){
+            LOGGER.warn("GiftIssueConfig countByGiftId Failded: giftId Is Null");
+            return ErrorCode.PARAMS_MISS.toRpcResult();
+        }
+        if (giftId <= 0){
+            LOGGER.warn("GiftIssueConfig countByGiftId Failded: giftId Is Invalid");
+            return ErrorCode.PARAMS_INVALID.toRpcResult();
+        }
+        GiftIssueEntity params = new GiftIssueEntity();
+        params.setId(giftId);
+        long count = giftIssueEntityManager.selectCount(params);
+        return RpcResult.success((int) count);
+    }
+
+    @Override
     public RpcResult<DataPage<GiftIssueDTO>> queryPage(DataPage<GiftIssueDTO> dataPage, GiftIssueDTO giftIssueDTO) {
         if (Objects.isNull(dataPage) || Objects.isNull(giftIssueDTO)) {
             LOGGER.warn("dataPage Is Null Or giftIssueDTO Is Null");
