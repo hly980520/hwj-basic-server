@@ -1,8 +1,10 @@
 package com.hwj.basic.server.membergift.service.impl;
 
 import com.hwj.basic.common.membergift.dto.MemberGiftDTO;
+import com.hwj.basic.common.membergift.service.MemberGiftReadService;
 import com.hwj.basic.common.membergift.service.MemberGiftWriteService;
 import com.hwj.basic.constant.ErrorCode;
+import com.hwj.basic.mybatis.DataPage;
 import com.hwj.basic.result.RpcResult;
 import com.hwj.basic.server.constant.DubboConst;
 import com.hwj.basic.server.membergift.converter.MemberGiftEntityConverter;
@@ -26,7 +28,6 @@ public class MemberGiftWriteServiceImpl implements MemberGiftWriteService {
     @Resource
     private MemberGiftEntityConverter memberGiftEntityConverter;
 
-
     @Override
     public RpcResult<MemberGiftDTO> create(MemberGiftDTO memberGiftDTO) {
         if (Objects.isNull(memberGiftDTO)){
@@ -46,7 +47,6 @@ public class MemberGiftWriteServiceImpl implements MemberGiftWriteService {
             LOGGER.error("MemberGift Create Failded: System Exception,[{}]",e.getMessage());
             return ErrorCode.SYSTEM_EXCEPTION.toRpcResult();
         }
-
     }
 
     @Override

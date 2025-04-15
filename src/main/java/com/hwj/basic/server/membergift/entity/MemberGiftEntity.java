@@ -7,94 +7,43 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.StringJoiner;
 
-/**
- * 用户礼品实体类
- */
-@TableName(value = "member_gift", autoResultMap = true)
+@TableName(value = "member_gift",autoResultMap = true)
 public class MemberGiftEntity implements Serializable {
+    private static final long serialVersionUID = -5356997993731411698L;
 
-    private static final long serialVersionUID = -3469990884795573914L;
-
-    /**
-     * id
-     */
     @TableId(type = IdType.AUTO)
     private Long id;
 
-    /**
-     * 用户id
-     */
     private Long memberId;
 
-    /**
-     * 礼品id
-     */
     private Long giftId;
 
-    /**
-     * 礼品类型
-     */
     private Integer giftType;
 
-    /**
-     * 状态[0:待使用 1:使用中 2:已使用]
-     */
     private Integer status;
 
-    /**
-     * 来源id
-     */
     private Long sourceId;
 
-    /**
-     * 备注
-     */
     private String remark;
 
-    /**
-     * 是否删除[否:0 是:记录id]
-     */
-    private Long deleted;
+    private Boolean deleted;
 
-    /**
-     * 删除时间
-     */
     private LocalDateTime deletedDate;
 
-    /**
-     * 扩展字段
-     */
     private JSONObject features;
 
-    /**
-     * 乐观锁版本号
-     */
     @Version
     private Integer lockVersion;
 
-    /**
-     * 创建时间
-     */
     @TableField(fill = FieldFill.INSERT)
     private LocalDateTime createdDate;
 
-    /**
-     * 创建人
-     */
     private String createdBy;
 
-    /**
-     * 更新时间
-     */
     @TableField(fill = FieldFill.INSERT_UPDATE)
     private LocalDateTime updatedDate;
 
-    /**
-     * 更新人
-     */
     private String updatedBy;
-
-    // Getters and Setters
 
     public Long getId() {
         return id;
@@ -152,11 +101,11 @@ public class MemberGiftEntity implements Serializable {
         this.remark = remark;
     }
 
-    public Long getDeleted() {
+    public Boolean getDeleted() {
         return deleted;
     }
 
-    public void setDeleted(Long deleted) {
+    public void setDeleted(Boolean deleted) {
         this.deleted = deleted;
     }
 
@@ -220,11 +169,11 @@ public class MemberGiftEntity implements Serializable {
     public String toString() {
         return new StringJoiner(", ", MemberGiftEntity.class.getSimpleName() + "[", "]")
                 .add("id=" + id)
-                .add("memberId=" + memberId)
-                .add("giftId=" + giftId)
-                .add("giftType=" + giftType)
-                .add("status=" + status)
-                .add("sourceId=" + sourceId)
+                .add("memberId='" + memberId)
+                .add("giftId='" + giftId)
+                .add("giftType='" + giftType )
+                .add("status='" + status )
+                .add("sourceId='" + sourceId)
                 .add("remark='" + remark + "'")
                 .add("deleted=" + deleted)
                 .add("deletedDate=" + deletedDate)

@@ -71,7 +71,7 @@ public class MemberMissionRewardEntity implements Serializable {
     /**
      * 是否删除[否:0 是:记录id]
      */
-    private Long deleted;
+    private Boolean deleted;
 
     /**
      * 删除时间
@@ -189,11 +189,11 @@ public class MemberMissionRewardEntity implements Serializable {
         this.lockVersion = lockVersion;
     }
 
-    public Long getDeleted() {
+    public Boolean getDeleted() {
         return deleted;
     }
 
-    public void setDeleted(Long deleted) {
+    public void setDeleted(Boolean deleted) {
         this.deleted = deleted;
     }
 

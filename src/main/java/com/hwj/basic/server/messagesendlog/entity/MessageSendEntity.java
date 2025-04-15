@@ -171,6 +171,7 @@ public class MessageSendEntity implements Serializable {
         this.updatedBy = updatedBy;
     }
 
+
     @Override
     public String toString() {
         return new StringJoiner(", ", MessageSendEntity.class.getSimpleName() + "[", "]")

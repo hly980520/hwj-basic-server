@@ -18,7 +18,7 @@ public class ActivityEntityManager extends HwjBaseManager<ActivityEntityMapper, 
         QueryWrapper<ActivityEntity> wrapper = new QueryWrapper<>();
         wrapper.lambda()
                 .eq(Objects.nonNull(params.getId()),ActivityEntity::getId,params.getId())
-                .like(Objects.nonNull(params.getName()),ActivityEntity::getName,params.getId())
+                .like(Objects.nonNull(params.getName()),ActivityEntity::getName,params.getName())
                 .eq(Objects.nonNull(params.getActivityType()),ActivityEntity::getActivityType,params.getActivityType())
                 .eq(Objects.nonNull(params.getStatus()),ActivityEntity::getStatus,params.getStatus());
         return wrapper;

@@ -18,7 +18,7 @@ public class ActivityRuleTextEntity implements Serializable {
 
     private String ruleText;
 
-    private boolean deleted;
+    private Boolean deleted;
 
     private LocalDateTime deletedDate;
 
@@ -59,11 +59,12 @@ public class ActivityRuleTextEntity implements Serializable {
         this.ruleText = ruleText;
     }
 
-    public boolean isDeleted() {
+
+    public Boolean getDeleted() {
         return deleted;
     }
 
-    public void setDeleted(boolean deleted) {
+    public void setDeleted(Boolean deleted) {
         this.deleted = deleted;
     }
 
@@ -87,8 +88,8 @@ public class ActivityRuleTextEntity implements Serializable {
         return createdDate;
     }
 
-    public void setCreatedDaate(LocalDateTime createdDaate) {
-        this.createdDate = createdDaate;
+    public void setCreatedDate(LocalDateTime createdDate) {
+        this.createdDate = createdDate;
     }
 
     public String getCreatedBy() {

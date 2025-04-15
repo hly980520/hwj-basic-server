@@ -20,7 +20,6 @@ import java.util.stream.Collectors;
 
 @DubboService(provider = DubboConst.PROVIDER)
 public class MemberGiftReadServiceImpl implements MemberGiftReadService {
-
     private static final Logger LOGGER = LoggerFactory.getLogger(MemberGiftReadServiceImpl.class);
 
     @Resource
@@ -43,6 +42,7 @@ public class MemberGiftReadServiceImpl implements MemberGiftReadService {
         MemberGiftEntity entity = memberGiftEntityManager.selectById(id);
         MemberGiftDTO data = memberGiftEntityConverter.toDTO(entity);
         return RpcResult.success(data);
+
     }
 
     @Override
@@ -61,6 +61,7 @@ public class MemberGiftReadServiceImpl implements MemberGiftReadService {
         MemberGiftEntity entity = memberGiftEntityManager.selectOne(params);
         MemberGiftDTO data = memberGiftEntityConverter.toDTO(entity);
         return RpcResult.success(data);
+
     }
 
     @Override

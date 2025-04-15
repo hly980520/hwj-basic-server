@@ -1,6 +1,7 @@
 package com.hwj.basic.server.membergift.manager;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.hwj.basic.server.member.entity.MemberEntity;
 import com.hwj.basic.server.membergift.entity.MemberGiftEntity;
 import com.hwj.basic.server.membergift.mapper.MemberGiftEntityMapper;
 import com.hwj.basic.server.support.mybatis.manager.HwjBaseManager;

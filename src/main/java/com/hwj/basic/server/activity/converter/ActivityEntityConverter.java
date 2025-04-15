@@ -5,6 +5,8 @@ import com.hwj.basic.server.activity.entity.ActivityEntity;
 import org.mapstruct.Mapper;
 
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 @Mapper(componentModel = "spring")
 public interface ActivityEntityConverter {
@@ -14,4 +16,5 @@ public interface ActivityEntityConverter {
     ActivityDTO toDTO(ActivityEntity activityEntity);
 
     List<ActivityDTO> toDTOList(List<ActivityEntity> entities);
+
 }
