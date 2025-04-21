@@ -39,15 +39,15 @@
         <appender-ref ref="FILE-BUZZ"/>
     </appender>
 
-    <!-- 多环境配置 -->
-    <springProfile name="dev">
-        <root level="INFO">
-            <appender-ref ref="STDOUT"/>
-        </root>
-    </springProfile>
-    <springProfile name="!dev">
-        <root level="INFO">
-            <appender-ref ref="ASYNC"/>
-        </root>
-    </springProfile>
+    <root level="INFO">
+        <if condition='property("os.name").contains("Windows") || property("os.name").contains("Mac")'>
+            <then>
+                <appender-ref ref="STDOUT"/>
+            </then>
+            <else>
+                <appender-ref ref="ASYNC"/>
+            </else>
+        </if>
+    </root>
+
 </configuration>
