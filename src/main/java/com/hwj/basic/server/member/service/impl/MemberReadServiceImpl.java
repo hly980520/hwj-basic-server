@@ -1,6 +1,5 @@
 package com.hwj.basic.server.member.service.impl;
 
-import com.alibaba.nacos.api.config.annotation.NacosValue;
 import com.hwj.basic.common.member.domain.Member;
 import com.hwj.basic.common.member.params.MemberQuery;
 import com.hwj.basic.common.member.service.MemberReadService;
@@ -56,7 +55,7 @@ public class MemberReadServiceImpl implements MemberReadService {
             LOGGER.warn("loginAccount Is Blank");
             return ErrorCode.PARAMS_MISS.toRpcResult();
         }
-        MemberEntity params = new MemberEntity();
+        MemberQuery params = new MemberQuery();
         params.setLoginAccount(loginAccount);
         MemberEntity memberEntity = memberEntityManager.selectOne(params);
         Member data = memberEntityConverter.toDomain(memberEntity);
@@ -69,7 +68,7 @@ public class MemberReadServiceImpl implements MemberReadService {
             LOGGER.warn("CountryCode Is Blank Or phoneNumber Is Blank");
             return ErrorCode.PARAMS_MISS.toRpcResult();
         }
-        MemberEntity params = new MemberEntity();
+        MemberQuery params = new MemberQuery();
         params.setCountryCode(countryCode);
         params.setPhoneNumber(phoneNumber);
         MemberEntity memberEntity = memberEntityManager.selectOne(params);
