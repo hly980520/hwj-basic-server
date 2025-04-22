@@ -2,6 +2,7 @@ package com.hwj.basic.server.member.service.impl;
 
 import com.alibaba.nacos.api.config.annotation.NacosValue;
 import com.hwj.basic.common.member.domain.Member;
+import com.hwj.basic.common.member.params.MemberQuery;
 import com.hwj.basic.common.member.service.MemberReadService;
 import com.hwj.basic.constant.ErrorCode;
 import com.hwj.basic.mybatis.DataPage;
@@ -77,16 +78,13 @@ public class MemberReadServiceImpl implements MemberReadService {
     }
 
     @Override
-    public RpcResult<DataPage<Member>> queryPage(DataPage<Member> dataPage, Member member) {
-        if (Objects.isNull(dataPage) || Objects.isNull(member)) {
-            LOGGER.warn("dataPage Is Null Or Member Is Null");
+    public RpcResult<DataPage<Member>> queryPage(DataPage<Member> dataPage, MemberQuery params) {
+        if (Objects.isNull(dataPage) || Objects.isNull(params)) {
+            LOGGER.warn("dataPage Is Null Or params Is Null");
             return ErrorCode.PARAMS_MISS.toRpcResult();
         }
 
-        dataPage = memberEntityManager.selectPage(dataPage,
-                memberEntityConverter.from(member),
-                this::toMemberList
-        );
+        dataPage = memberEntityManager.selectPage(dataPage, params, this::toMemberList);
 
         return RpcResult.success(dataPage);
     }

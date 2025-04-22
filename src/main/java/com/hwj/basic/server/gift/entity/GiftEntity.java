@@ -34,6 +34,11 @@ public class GiftEntity implements Serializable {
     private Integer giftType;
 
     /**
+     * 礼品发放数量
+     */
+    private Integer quantity;
+
+    /**
      * 活动状态[0:草稿 1:上线 2:下线]
      */
     private Integer status;
@@ -108,6 +113,14 @@ public class GiftEntity implements Serializable {
 
     public void setGiftType(Integer giftType) {
         this.giftType = giftType;
+    }
+
+    public Integer getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(Integer quantity) {
+        this.quantity = quantity;
     }
 
     public Integer getStatus() {
@@ -196,6 +209,7 @@ public class GiftEntity implements Serializable {
                 .add("id=" + id)
                 .add("name='" + name + "'")
                 .add("giftType=" + giftType)
+                .add("quantity=" + quantity)
                 .add("status=" + status)
                 .add("remark='" + remark + "'")
                 .add("deleted=" + deleted)
